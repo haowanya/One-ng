@@ -8,8 +8,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [AppComponent, RandomComponent],
@@ -22,7 +23,9 @@ import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-
     MatButtonModule,
     MatSelectModule,
     MatFormFieldModule,
-    // MatFormFieldControl
+    MatFormFieldModule,
+    MatInputModule,
+    MatBottomSheetModule
   ],
   providers: [],
   bootstrap: [AppComponent],
