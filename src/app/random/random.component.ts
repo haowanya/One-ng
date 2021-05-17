@@ -1,25 +1,25 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import {
-  MatBottomSheet,
-  MatBottomSheetRef,
-} from '@angular/material/bottom-sheet';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 interface Food {
   value: string;
   viewValue: string;
 }
-
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 @Component({
   selector: 'app-random',
   templateUrl: './random.component.html',
   styleUrls: ['./random.component.less'],
 })
 export class RandomComponent implements OnInit {
-  @Output() ReviewerName: any;
-  @Output() Sushi: any;
+  // @Output() ReviewerName: any;
+  // @Output() Sushi: any;
   binding: any = 'Amy';
-  // ReviewerName: string = '';
-  // Sushi: string = '';
+  ReviewerName: string = '';
+  Sushi: string = '';
   isActive: string = '1';
   foods: Food[] = [
     { value: 'Amy', viewValue: 'Amy' },
@@ -32,12 +32,18 @@ export class RandomComponent implements OnInit {
     { value: 'Taolue', viewValue: 'Taolue' },
   ];
   animalControl = new FormControl('', Validators.required);
-  constructor(private _bottomSheet: MatBottomSheet) {}
+  constructor(public dialog: MatDialog) { }
   updata(): void {
-    if (this.Sushi) this._bottomSheet.open(BottomSheetOverviewExampleSheet);
-    else alert('JIRA project ID cannot be empty');
+    if(this.Sushi){
+      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+        width:'500px',
+        data: { name: this.ReviewerName, animal: this.Sushi }
+      });
+    }else{
+      alert('JIRA project ID cannot be empty')
+    }
   }
-  ngOnInit() {}
+  ngOnInit() { }
   okBtn() {
     let data = JSON.parse(JSON.stringify(this.foods));
     data.forEach((v: object, i: number) => {
@@ -49,27 +55,21 @@ export class RandomComponent implements OnInit {
     this.ReviewerName = data[Math.floor(Math.random() * data.length)].value;
     this.isActive = '2';
   }
-  // updata() {
-  //   if (this.Sushi)
-  //     alert(
-  //       `Congratulation! ${this.ReviewerName} was chosed as the reviewer of PRSM-${this.Sushi} !". (${this.ReviewerName} is the reviewer's name, PRSM-${this.Sushi} is the JIRA item ID)`
-  //     );
-  //   else alert('JIRA project ID cannot be empty');
-  // }
+  BackOff(){
+    this.isActive='1'
+    this.Sushi=''
+  }
 }
 
 @Component({
-  selector: 'bottom-sheet-overview-example-sheet',
+  selector: 'dialog-overview-example-dialog',
   templateUrl: './bottom-sheet-overview-example-sheet.html',
 })
-export class BottomSheetOverviewExampleSheet {
+export class DialogOverviewExampleDialog {
   constructor(
-    private _bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewExampleSheet>
-  ) {}
-  @Input() ReviewerName: string = '';
-  @Input() Sushi: string = '';
-  openLink(event: MouseEvent): void {
-    this._bottomSheetRef.dismiss();
-    event.preventDefault();
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [AppComponent, RandomComponent],
@@ -25,7 +26,8 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
     MatFormFieldModule,
     MatFormFieldModule,
     MatInputModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],
