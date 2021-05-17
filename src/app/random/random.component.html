@@ -1,0 +1,27 @@
+<div *ngIf="isActive=='1'" style="margin-left: 50px;margin-top: 50px;">
+  <select required style="margin-right: 50px;" [(ngModel)]="binding">
+    <option *ngFor='let item of foods' [value]="item.viewValue">{{item.value}}</option>
+  </select>
+</div>
+<div *ngIf="isActive=='2'" style="margin-left: 50px;margin-top: 50px;">
+<!-- <form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>JIRA item ID</mat-label> -->
+    <input matInput placeholder="JIRA item ID" [(ngModel)]="Sushi" >
+  <!-- </mat-form-field> -->
+
+<!-- </form> -->
+</div>
+<button mat-raised-button color="primary" (click)="isActive==='1'?okBtn():updata()">{{isActive==='1'?'Confirm':'Random Assign'}}</button>
+
+
+<!-- <h4>Basic native select</h4>
+<mat-form-field >
+  <mat-label>Cars</mat-label>
+  <select matNativeControl required>
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </select>
+</mat-form-field> -->
