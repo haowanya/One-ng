@@ -1,6 +1,5 @@
-import { Component, Inject, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component,OnInit} from '@angular/core';
+import { Router } from "@angular/router";
 
 interface Food {
   value: string;
@@ -18,10 +17,10 @@ export interface DialogData {
 export class RandomComponent implements OnInit {
   ReviewerName: string = '';
   Sushi: string = '';
-  binding: string = 'Amy';
+  binding: string = 'Xiaohang';
   foods: Food[] = [
-    { value: 'Amy', viewValue: 'Amy' },
     { value: 'Xiaohang', viewValue: 'Xiaohang' },
+    { value: 'Amy', viewValue: 'Amy' },
     { value: 'Charles', viewValue: 'Charles' },
     { value: 'David', viewValue: 'David' },
     { value: 'Alice', viewValue: 'Alice' },
@@ -29,8 +28,7 @@ export class RandomComponent implements OnInit {
     { value: 'Chris', viewValue: 'Chris' },
     { value: 'Taolue', viewValue: 'Taolue' },
   ];
-  animalControl = new FormControl('', Validators.required);
-  constructor(private routeInfo: ActivatedRoute, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() { }
   okBtn() {

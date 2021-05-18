@@ -1,6 +1,4 @@
-import { Component, OnChanges, SimpleChanges, OnInit, Inject } from '@angular/core';
-import { IProjectITemProps, IProjectITemStates, IProjectITemOutput } from './projectITem.component.d';
-// import { ReactComponentBase } from '@app/components/reactComponentBase/reactComponentBase.component';
+import { Component, OnInit, Inject, OnChanges } from '@angular/core';
 import { ProjectITemService } from './projectITem.component.service';
 import {
   MatDialog,
@@ -9,6 +7,8 @@ import {
 } from '@angular/material/dialog';
 import { DialogData } from '../random/random.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 interface Food {
   value: string;
   viewValue: string;
@@ -21,8 +21,9 @@ interface Food {
 })
 
 export class ProjectITemComponent implements OnInit, OnChanges {
-  constructor(private svc: ProjectITemService, public dialog: MatDialog, private router: Router, private routeInfo: ActivatedRoute) {
+  constructor(public dialog: MatDialog, private router: Router, private routeInfo: ActivatedRoute) {
   }
+  flag: boolean = true
   Sushi: string = ''
   ReviewerName: string = ''
   binding: string = this.routeInfo.snapshot.queryParams['name']
@@ -36,39 +37,31 @@ export class ProjectITemComponent implements OnInit, OnChanges {
     { value: 'Chris', viewValue: 'Chris' },
     { value: 'Taolue', viewValue: 'Taolue' },
   ];
-
-
+  emailFormControl = new FormControl('', [
+    Validators.required,
+  ]);
+  matcher = new MyErrorStateMatcher();
   updata(): void {
-    let data: Food[] = JSON.parse(JSON.stringify(this.foods));
-    data.forEach((v, i) => {
+    console.log('[ emailFormControl ]', this.emailFormControl)
+    this.foods.forEach((v, i) => {
       if (v.value === this.binding) {
-        data.splice(i, 1);
+        this.foods.splice(i, 1);
       }
     });
-    this.ReviewerName = data[Math.floor(Math.random() * data.length)].value;
-    if (this.Sushi) {
-      const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-        width: '500px',
-        data: { name: this.ReviewerName, animal: this.Sushi },
-      });
-    } else {
-      alert('JIRA project ID cannot be empty');
-    }
+    this.ReviewerName = this.foods[Math.floor(Math.random() * this.foods.length)].value;
+    this.dialog.open(DialogOverviewExampleDialog, {
+      width: '500px',
+      data: { name: this.ReviewerName, animal: this.emailFormControl.value },
+    });
   }
   BackOff() {
     this.Sushi = ''
     this.router.navigate(['/Random']);
   }
+  ngOnInit() { }
 
-  ngOnInit() {
-    console.log(this.routeInfo.snapshot.queryParams['name']);
+  ngOnChanges() { }
 
-    // this.setStates(this.svc.initDelegate(this.props, this.states));
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // this.setStates(this.svc.changeDelegate(changes.props.previousValue, changes.props.currentValue, this.states));
-  }
 }
 
 
@@ -83,5 +76,12 @@ export class DialogOverviewExampleDialog {
   ) { }
   onNoClick(): void {
     this.dialogRef.close();
+  }
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }

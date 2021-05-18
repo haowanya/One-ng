@@ -3,12 +3,16 @@
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <mat-label>JIRA item ID</mat-label>
-        <input matInput placeholder="JIRA item ID" [(ngModel)]="Sushi" name="Sushi" />
+        <input matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher" placeholder="JIRA item ID">
+        <mat-hint>Errors appear instantly!</mat-hint>
+        <mat-error *ngIf="emailFormControl.hasError('required')">
+          JIRA item ID <strong>required</strong>
+        </mat-error>
       </mat-form-field>
     </form>
   </div>
 
-  <button mat-raised-button color="primary" (click)="updata()">
+  <button mat-raised-button color="primary" (click)="updata()" [disabled]='!emailFormControl.valid'>
     Random Assign
   </button>
   <button mat-raised-button color="primary" (click)="BackOff()" style="margin-left: 50px;">
