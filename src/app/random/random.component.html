@@ -1,5 +1,5 @@
 <div class="wrap">
-  <div *ngIf="isActive === '1'">
+  <div>
     <h4>JIRA item reviewer</h4>
     <mat-form-field appearance="fill">
       <mat-select [(ngModel)]="binding">
@@ -9,32 +9,8 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div *ngIf="isActive === '2'">
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <mat-label>JIRA item ID</mat-label>
-        <input
-          matInput
-          placeholder="JIRA item ID"
-          [(ngModel)]="Sushi"
-          name="Sushi"
-        />
-      </mat-form-field>
-    </form>
-  </div>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="isActive === '1' ? okBtn() : updata()"
-  >
-    {{ isActive === "1" ? "Confirm" : "Random Assign" }}
-  </button>
-  <button
-    mat-raised-button
-    color="primary"
-    *ngIf="isActive === '2'"
-    (click)="BackOff()"
-  >
-    Back off
+
+  <button mat-raised-button color="primary" (click)="okBtn()">
+    Confirm
   </button>
 </div>

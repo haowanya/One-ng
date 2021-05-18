@@ -1,0 +1,17 @@
+<div style="margin-top: 50px;margin-left: 50px;">
+  <div>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>JIRA item ID</mat-label>
+        <input matInput placeholder="JIRA item ID" [(ngModel)]="Sushi" name="Sushi" />
+      </mat-form-field>
+    </form>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="updata()">
+    Random Assign
+  </button>
+  <button mat-raised-button color="primary" (click)="BackOff()" style="margin-left: 50px;">
+    Back off
+  </button>
+</div>
